@@ -134,6 +134,7 @@
     	min-width: 1190px;
     	height: 100%;
     }
+    
       #navigation .el-menu-vertical-demo{
       	  box-sizing: border-box;
       	  background-color: white;
