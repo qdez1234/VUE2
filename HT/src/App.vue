@@ -40,7 +40,7 @@
   	
   <div id="navigation">
   	  <el-col :span="4">
-    <el-menu default-active="2" class="el-menu-vertical-demo" theme="light">
+    <el-menu default-active="4-1" class="el-menu-vertical-demo" theme="light">
     <el-menu-item index="1"><i class="el-icon-menu"></i>提醒 <el-button type="success" class="number">5</el-button> <el-button type="danger" class="number">5</el-button> </el-menu-item>
     <el-menu-item index="2"><i class="el-icon-menu"></i>特批/需批<el-button type="success" class="number">5</el-button> <el-button type="danger" class="number">5</el-button>  </el-menu-item>
      <el-submenu index="3">
@@ -138,6 +138,7 @@
       #navigation .el-menu-vertical-demo{
       	  box-sizing: border-box;
       	  background-color: white;
+      	  max-width: 250px;
       }
        #navigation .el-menu-vertical-demo>li{
       	 padding: 0;
