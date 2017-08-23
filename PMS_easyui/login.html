@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<title>后台登录</title>
+		<meta name="author" content="DeathGhost">
+		<link rel="stylesheet" href="css/style.css" />
+		<style>
+			body { height: 100%; background: #16a085; overflow: hidden; }
+			canvas { z-index: -1; position: absolute; }
+		</style>
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<script type="text/javascript" src="js/Particleground.js" ></script>
+		<script>
+			$(document).ready(function() {
+				//粒子背景特效
+				$('body').particleground({
+					dotColor: '#5cbdaa',
+					lineColor: '#5cbdaa'});
+			});
+		</script>
+	</head>
+
+<body>
+<!--		<canvas class="pg-canvas" width="1920" height="950"></canvas>-->
+		<dl class="admin_login">
+					<dt>
+						  <strong>誉鑫信息管理系统</strong>
+						  <em>Management System</em>
+				 	</dt>
+					<dd class="user_icon">
+							<input type="text" placeholder="账号" class="login_txtbx">
+					</dd>
+					<dd class="pwd_icon">
+							<input type="password" placeholder="密码" class="login_txtbx" id="password">
+					</dd>
+					<dd class="pro_icon">
+							<input type="text" placeholder="项目" class="login_txtbx">
+					</dd>
+
+					<dd>
+							<input type="button" value="立即登陆" class="submit_btn">
+					</dd>
+					<dd>
+							<p>© 2017-2018  HUGO版权所有</p>
+							<p>誉鑫信息管理系统</p>
+					</dd>
+		</dl>
+
+</body>
+</html>
