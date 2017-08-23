@@ -1,0 +1,201 @@
+body{
+	background-color: #4B5D67;
+	width: 100%;
+	height:100%;
+}
+html{
+	background-color: #4B5D67;
+	width: 100%;
+	height:100%;
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+  input[type="checkbox"]:checked + i {
+    border-color: blue;
+    color: blue;
+  }  
+
+body{
+	position: relative;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+       -webkit-appearance: none !important;  
+                 }
+input[type="number"]{-moz-appearance:textfield;} 
+#logo{
+	height: 500px;
+	width: 1120px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+#logo .text{
+	float: left;
+}
+#logo .list{
+	width:600px;
+	height: 200px;
+	float: left;
+	margin-top: 80px;
+}
+#logo .list .list-1{
+	margin-left: 90px;
+	width: 100%;
+	float: left;
+}
+#logo .list img{
+	float: left;
+}
+#logo .list .list-text{
+	display: inline-block;
+	float: left;
+	color: white;
+	font-size: 30px;
+	height:85px;
+	width: 135px;
+	font-weight: 800;
+	line-height: 40px;
+	margin-left: 10px;
+}
+#logo .list .list-text .zm{
+	font-size: 18px;
+}
+#logo .list-2{
+	float: left;
+	font-size: 60px;
+	margin-top: 20px;
+	font-weight: 900;
+	color: white;
+}
+#logo .tab{
+	float: right;
+	width: 360px;
+	box-sizing: border-box;
+	height: 500px;
+	background-color: white;
+	padding: 30px;
+}
+#logo .tab .header{
+	box-sizing: border-box;
+	padding: 0 30px;
+	padding-bottom: 60px;
+
+}
+#logo .tab .header li{
+	float: left;
+	list-style: none;
+	font-size: 25px;
+}
+#logo .tab .header li:first-child{
+    padding-right: 18px;
+    color: #EA5425;
+    border-right: 3px solid #ccc
+}
+#logo .tab .header li:last-child{
+    padding-left: 18px;
+    color: #CCCCCC;
+}
+
+#logo .tab .body{
+	height: 310px;
+	width: 290px;
+}
+#logo .tab .body div{
+	height: 50px;
+	margin-top: 10px;
+    position: relative;
+
+}
+#logo .tab .body div input{
+	height: 50px;
+	width: 290px;
+	box-sizing: border-box;
+	padding-left: 10px;
+	outline: none;
+}
+#logo .tab .body div input:focus{
+	border: 2px solid #EA5425;
+}
+
+#logo .tab .body  .top{
+	width: 150px;
+	height: 27px;
+	line-height: 27px;
+	font-size: 12px;
+	position: absolute;
+	background-color: #fff;
+	top: -33px;
+	left: 73px;
+	text-align: center;
+	box-shadow:  0 4px 20px 1px  #808080;
+}
+#logo .tab .body i{
+	width: 20px;
+	height: 20px;
+	line-height: 30px;
+	font-size: 12px;
+	position: absolute;
+	top: -23px;
+	left: 139px;
+	box-shadow:  0 4px 20px 1px #DDDDDD;
+	transform:rotate(45deg);
+}
+#logo .tab .body .projects input{
+	width:272px;
+	height: 50px;
+	float: left;
+}
+#logo .tab .body .projects{
+	position:relative
+}
+#logo .tab .body .projects span{
+    margin-left:0px;
+    width:18px;
+    height: 50px;
+    overflow:hidden;
+    position:absolute;
+    right: 0;
+}
+#logo .tab .body .projects span select{
+position:absolute;
+right:0px;
+height: 50px;
+width: 290px;
+}
+#logo .tab .body .radio{
+	height: 20px;
+}
+#logo .tab .body .radio input{
+    width: 15px;
+    height: 15px;
+    float: left;
+}
+#logo .tab .body .radio span{
+	float: left;
+	font-size: 12px;
+	color: #999999;
+}
+
+#logo .tab .body .btn{
+	background-color: #EA5425;
+	font-size: 30px;
+	color: white;
+	text-align: center;
+	line-height:50px;
+	cursor: pointer;
+}
+#logo .tab .body .btn:hover{
+	transition: all 0.3s;
+	opacity:0.8;
+}
+#logo .tab .body .warning{
+	float: right;
+	color: #999;
+	font-size: 15px;
+}

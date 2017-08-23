@@ -6,11 +6,25 @@ import ElementUi from "element-ui"
 import "element-ui/lib/theme-default/index.css"
 
 //组件
-import v1 from "./view/v1.vue"
-import v2 from "./view/v2.vue"
-import v3 from "./view/v3.vue"
-import v4 from "./view/v4.vue"
-import v from "./view/v.vue"
+import Rlist1 from "./view/radioList1.vue"
+import Rlist2 from "./view/radioList2.vue"
+import Dwork from "./view/departmentWork.vue"
+import Donce from "./view/departmentOnce.vue"
+import Dfunding from "./view/departmentFunding.vue"
+import Dsystem from "./view/departmentSystem.vue"
+import Pawards from "./view/projectsAwards.vue"
+import Ptask from "./view/projectsTask.vue"
+import Ppersonage from "./view/performancePersonage.vue"
+import Pprojects from "./view/performanceProjects.vue"
+import Ktraining from "./view/knowledgeTraining.vue"
+import Ksummary from "./view/knowledgeSummary.vue"
+import Steam from "./view/settingTeam.vue"
+
+
+
+
+
+
 
 Vue.use(ElementUi)
 Vue.use(VueRouter)
@@ -19,26 +33,64 @@ Vue.use(VueResource)
 
 var  router=new VueRouter({
      routes:[
-             {
-      path: '/ace',
-      component: v1
-    },
-     {
-      path: '/acf',
-      component: v2
+      {
+      path: '/',
+      component: Dwork
     },
     {
-      path: '/acg',
-      component: v3
+      path: '/radio/list1',
+      component: Rlist1
     },
     {
-      path: '/ach',
-      component: v4
-    },
+      path: '/radio/list2',
+      component: Rlist2
+    } ,
+   {
+      path: '/department/work',
+      component: Dwork
+   },
+   
+   {
+      path: '/department/once',
+      component: Donce
+   },
+      {
+      path: '/department/funding',
+      component: Dfunding
+   },    
+   {
+      path: '/department/system',
+      component: Dsystem
+   },
     {
-      path: '/aci',
-      component: v
-    }
+      path: '/projects/task',
+      component: Ptask
+   },
+   {
+      path: '/projects/awards',
+      component: Pawards
+   },
+
+   {
+      path: '/performance/personage',
+      component: Ppersonage
+   },
+   {
+      path: '/performance/projects',
+      component: Pprojects
+   },
+   {
+      path: '/knowledge/summary',
+      component: Ksummary
+   },
+   {
+      path: '/knowledge/training',
+      component: Ktraining
+   },
+   {
+      path: 'setting/team',
+      component: Steam
+   },
      ]
 })
 

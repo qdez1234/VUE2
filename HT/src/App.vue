@@ -39,49 +39,49 @@
 
   	
   <div id="navigation">
-  	  <el-col :span="4">
-    <el-menu default-active="4-1" class="el-menu-vertical-demo" theme="light">
+  	  <el-col :span="4" class="Nconten">
+    <el-menu default-active="4-1" class="el-menu-vertical-demo" theme="light" unique-opened>
     <el-menu-item index="1"><i class="el-icon-menu"></i>提醒 <el-button type="success" class="number">5</el-button> <el-button type="danger" class="number">5</el-button> </el-menu-item>
     <el-menu-item index="2"><i class="el-icon-menu"></i>特批/需批<el-button type="success" class="number">5</el-button> <el-button type="danger" class="number">5</el-button>  </el-menu-item>
      <el-submenu index="3">
         <template slot="title"><i class="el-icon-message"></i>通讯录</template>
         <el-menu-item-group>
-          <el-menu-item index="3-1">誉鑫公司</el-menu-item>
-          <el-menu-item index="3-2">其他公司</el-menu-item>
+          <el-menu-item index="3-1"><router-link to="/radio/list1">誉鑫公司</router-link></el-menu-item>
+          <el-menu-item index="3-2"><router-link to="/radio/list2">誉鑫公司</router-link></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
      <el-submenu index="4">
         <template slot="title"><i class="el-icon-message"></i>部门</template>
         <el-menu-item-group>
-          <el-menu-item index="4-1">工作日结</el-menu-item>
-          <el-menu-item index="4-2">每周日结</el-menu-item>
-          <el-menu-item index="4-3">部门经费</el-menu-item>
-          <el-menu-item index="4-4">体系文件</el-menu-item>
+          <el-menu-item index="4-1"> <router-link to="/department/work">工作日结</router-link></el-menu-item>
+          <el-menu-item index="4-2"> <router-link to="/department/once">每周日结</router-link></el-menu-item>
+          <el-menu-item index="4-3"> <router-link to="/department/funding">部门经费</router-link></el-menu-item>
+          <el-menu-item index="4-4"><router-link to="/department/system">体系文件</router-link></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
      <el-submenu index="5">
         <template slot="title"><i class="el-icon-message"></i>项目其他</template>
         <el-menu-item-group>
-          <el-menu-item index="5-1">项目任务</el-menu-item>
-          <el-menu-item index="5-2">项目奖励</el-menu-item>
+          <el-menu-item index="5-1"> <router-link to="/projects/task">项目任务</router-link></el-menu-item>
+          <el-menu-item index="5-2"><router-link to="/projects/awards">项目奖罚</router-link></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
      <el-submenu index="6">
         <template slot="title"><i class="el-icon-message"></i>绩效</template>
         <el-menu-item-group>
-          <el-menu-item index="6-1">个人绩效</el-menu-item>
-          <el-menu-item index="6-2">项目绩效</el-menu-item>
+          <el-menu-item index="6-1"> <router-link to="/performance/personage">个人绩效</router-link></el-menu-item>
+          <el-menu-item index="6-1"> <router-link to="/performance/projects">项目绩效</router-link></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
      <el-submenu index="7">
         <template slot="title"><i class="el-icon-message"></i>知识库</template>
         <el-menu-item-group>
-          <el-menu-item index="7-1">知识总结</el-menu-item>
-          <el-menu-item index="7-2">培训考试</el-menu-item>
+          <el-menu-item index="7-1"> <router-link to="/knowledge/training">知识培训</router-link></el-menu-item>
+          <el-menu-item index="7-2"> <router-link to="/knowledge/summary">知识总结</router-link></el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
@@ -102,15 +102,20 @@
       <span><i class="el-icon-star-off"></i>  <span class="timer">2017.06.06 10:05</span> <span class="text">详情详情详情情详详</span></span> 
       <span><i class="el-icon-star-off"></i>  <span class="timer">2017.06.06 10:05</span> <span class="text">详情详情详情情详详</span></span> 
       <span><i class="el-icon-star-off"></i>  <span class="timer">2017.06.06 10:05</span> <span class="text">详情详情详情情详详</span></span> 
+      <span><i class="el-icon-star-off"></i>  <span class="timer">2017.06.06 10:05</span> <span class="text">详情详情详情情详详</span></span> 
+      <span><i class="el-icon-star-off"></i>  <span class="timer">2017.06.06 10:05</span> <span class="text">详情详情详情情详详</span></span> 
        </li>
-
   </el-menu>
   </el-col>
   </div>
+    
+ 
+   
+     	 <div id="component"><router-view></router-view></div>
+     
+  
   </div>
-
 </template>
-
 
 <style>
     *{
@@ -134,11 +139,16 @@
     	min-width: 1190px;
     	height: 100%;
     }
-    
+    #navigation{
+    	float: left;
+    }
+      #navigation .Nconten{
+      	float: left;
+      }
       #navigation .el-menu-vertical-demo{
       	  box-sizing: border-box;
       	  background-color: white;
-      	  max-width: 250px;
+      	  width: 200px;
       }
        #navigation .el-menu-vertical-demo>li{
       	 padding: 0;
@@ -328,12 +338,18 @@
   }
 </style>
 
+<style type="text/css">
+	#component{
+	  margin-left: 210px;
+	  margin-top: 10px;
+	}
+</style>
 
 
 <script>
   export default {
     methods: {
-
+ 
     }
   }
 </script>
