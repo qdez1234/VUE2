@@ -4,8 +4,10 @@ var webpack = require('webpack')
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    path:path.resolve("/", './workpms/new1/PMS/src/main/webapp/common/dist'),
+    publicPath:"http://localhost:8080/pms/common/dist/",
+//  path:__dirname+"/dist",
+//  publicPath:"/dist/",
     filename: 'build.js'
   },
   module: {
@@ -72,6 +74,11 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    })
+    }),
+new webpack.optimize.CommonsChunkPlugin('common.js'),
+new webpack.ProvidePlugin({
+jQuery: "jquery",
+$: "jquery"
+})
   ])
 }

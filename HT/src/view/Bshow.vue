@@ -1,5 +1,5 @@
 <template>
 	<div>
-		我是绩效-个人页面
+		我是主页面设计-展现模式
 	</div>
 </template>
