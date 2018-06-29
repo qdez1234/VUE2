@@ -1,0 +1,33 @@
+Component --全局组件注册    全局任何一个地方可以调用组件,
+
+Vue.component("todo-item",{
+       template:"<li>  Hello World  </li>"   //这样的话,为每个组件创建的内容都渲染同样的文本, 无法进行组件传值
+})
+
+
+Component--父子组件,父子组件可以通过传值来改变子组件里面的数据,props这个属性就是用来传值用的
+
+<div id="app">
+    <!--<root> 隐性的根组件,相对于注册的全局组件child来说，是父组件-->
+    <child  v-for="item in groceryList"  v-bind:todo="item"></child><!--child相对root来说是子组件，而 todo 这个变量是存在于父组件内的，应该属于父组件里的数据-->
+    <!--</root>-->     // 接着我们通过将数据绑定到对应的vue实例data中去
+</div>
+<script>
+    //注册一个全局组件，组件标签名为component
+    Vue.component('child', {
+        //组件构造器，此为一个对象，其中内容为多选项
+        props: ['todo'],//接收父组件传递的数据
+        template: '<span>{{todo.text}}</span>',
+        data(){return {val: 2};}, //这才是子组件里面的数据
+    });
+    //实例化Vue
+    new Vue({
+        el : '#app',
+        data : {
+        groceryList: [
+      { id: 0, text: '蔬菜' },
+      { id: 1, text: '奶酪' },
+      { id: 2, text: '随便其它什么人吃的东西' }
+    ]}, 
+    });
+</script>
