@@ -1,0 +1,13 @@
+var app=new Vue({
+   el:"#app",
+   data:{},
+   beforeCreate:function(){},   //vue实例刚刚被创建,组件属性计算之前,比如data属性等
+   created:function(){},         //vue实例被创建完成,属性已绑定,但是dom还没生成,$el属性还不存在  这个周期用去ajax请求数据
+   mounted:function(){},         //before 代表数据和模板结合之前, mounted代表数据模板结合之后
+   beforeUpdate:function(){},    //组件更新之前
+   updated:function(){},         //组件更新之后
+   activated:function(){},       //for keep-alive组件被激活的时候调用
+   deactivated:function(){},     //for keep-alive组件被移除的时候调用
+   beforeDestory:function(){},   //组件被销毁前调用
+   Destory:function(){}          //组件被销毁后调用
+})
