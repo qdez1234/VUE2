@@ -1,9 +1,9 @@
 var app=new Vue({
    el:"#app",
    data:{},
-   beforeCreate:function(){},   //vue实例刚刚被创建,组件属性计算之前,比如data属性等
-   created:function(){},         //vue实例被创建完成,属性已绑定,但是dom还没生成,$el属性还不存在  这个周期用去ajax请求数据
-   mounted:function(){},         //before 代表数据和模板结合之前, mounted代表数据模板结合之后
+   beforeCreate:function(){},    //vue实例刚刚被创建,组件属性计算之前,  el 和 data 并未初始化     el用来挂载模块
+   created:function(){},         //vue实例被创建完成, data 数据的初始化，el没有
+   mounted:function(){},         //before 代表数据和模板结合之前 完成了 el 和 data 初始化 , mounted代表数据模板结合之后完成挂载
    beforeUpdate:function(){},    //组件更新之前
    updated:function(){},         //组件更新之后
    activated:function(){},       //for keep-alive组件被激活的时候调用
