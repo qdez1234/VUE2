@@ -1,0 +1,13 @@
+Computed使用来处理复杂逻辑的方法
+
+<div id="example">
+  {{ message.split('').reverse().join('') }   }这个地方，模板是用简单的声明式逻辑  这样会变得更加难以维护  
+</div>
+
+    当需要处理复杂逻辑的时候   应当使用计算属性  computed:function(){ reversedMessage:function(){} }
+    
+<div id="example">
+
+ <p>Computed reversed message: "{{ reversedMessage }}"</p>   
+ 
+ </div>
