@@ -5,7 +5,7 @@ var app=new Vue({
    created:function(){},         //vue实例被创建完成, data 数据的初始化，el没有
    mounted:function(){},         //before 代表数据和模板结合之前 完成了 el 和 data 初始化 , mounted代表数据模板结合之后完成挂载
    beforeUpdate:function(){},    //组件更新之前
-   updated:function(){},         //组件更新之后
+   updated:function(){},         //组件更新之后    data里面的数值被修改之后
    activated:function(){},       //for keep-alive组件被激活的时候调用
    deactivated:function(){},     //for keep-alive组件被移除的时候调用
    beforeDestory:function(){},   //组件被销毁前调用
