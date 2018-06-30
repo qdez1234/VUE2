@@ -1,0 +1,23 @@
+
+
+父子组件使用$emit和v-on时，子组件使用$emit触发，父组件在实例中v-on自定义事件监听。
+
+
+  注意:  父组件监听子组件触发的事件,不能用$on侦听子组件抛出的事件,而必须在模板里面直接用v-on绑定
+  
+<div id="app">
+      <p>{{total}}</p>
+      <buttom-counter v-on:increment1="incrementTotal"></buttom-counter>             //子组件  v-on:父元素监听子元素事件
+</div>  
+
+Vue.component("button-counter",{
+      template:"<button v-on:click="incre">  点击 </button>",                       //子组件触发$emit事件
+      data:{},
+      methods:{
+         incre:function(){
+               console.log(123)
+               
+               this.$emit("increment1")
+          }
+      }
+})
