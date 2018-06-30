@@ -1,0 +1,20 @@
+由于 JavaScript 的限制，Vue 不能检测以下变动的数组：
+
+当你利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue
+当你修改数组的长度时，例如：vm.items.length = newLength  
+
+
+//以上设置无法被检测到    所以无法导致数据同步
+
+
+//设置数组时候   应该使用 Vue.set(vm.items, indexOfItem, newValue)  vm.items对应实例vue里面的数组,索引,值
+
+你也可以使用 vm.$set 实例方法，该方法是全局方法 Vue.set 的一个别名：
+
+
+
+和微信小程序一样的道理      this.setData({index:value})
+
+
+
+
