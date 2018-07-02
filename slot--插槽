@@ -1,0 +1,14 @@
+和 HTML 元素一样，我们经常需要向一个组件传递内容，像这样：
+<alert-box>
+  Something bad happened.      //内容写在组件里面, 组件里面放一个slot--插槽,用来放置写在组件里面的内容
+</alert-box>
+
+
+Vue.component('alert-box', {
+  template: `
+    <div class="demo-alert-box">
+      <strong>Error!</strong>
+      <slot></slot>
+    </div>
+  `
+})
