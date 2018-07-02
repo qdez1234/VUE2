@@ -7,17 +7,27 @@
   
 <div id="app">
       <p>{{total}}</p>
-      <buttom-counter v-on:increment1="incrementTotal"></buttom-counter>             //子组件  v-on:父元素监听子元素事件
+      <buttom-counter v-on:increment1="fontSize+=0.1"></buttom-counter>             //子组件  v-on:父元素监听子元素事件
 </div>  
 
 Vue.component("button-counter",{
       template:"<button v-on:click="incre">  点击 </button>",                       //子组件触发$emit事件
-      data:{},
+      data:{
+      fontSize:0
+      },
       methods:{
          incre:function(){
                console.log(123)
-               
                this.$emit("increment1")
           }
       }
 })
+有的时候用一个事件来抛出一个特定的值是非常有用的。例如我们可能想让 <blog-post> 组件决定它的文本要放大多少。这时可以使用 $emit 的第二个参数来提供这个值：
+<button v-on:click="$emit('enlarge-text', 0.1)">
+  Enlarge text
+</button>
+然后当在父级组件监听这个事件的时候，我们可以通过 $event 访问到被抛出的这个值：
+<blog-post
+  ...
+  v-on:enlarge-text="postFontSize += $event"
+></blog-post>
