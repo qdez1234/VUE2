@@ -1,0 +1,19 @@
+<div v-bid:class="item.id==currentId?'red':'yellow'"></div>
+<div v-bid:class="{active:isActive}"></div>
+
+
+export default{
+  data(){
+   return{
+      list:ture,
+      isActive:ture
+   }
+  },
+  watch:{
+     list:function(){
+       console.log("watch用来监听属性值是否发生变化")
+     }
+  }
+}
+
+
