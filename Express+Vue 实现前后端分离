@@ -1,0 +1,71 @@
+1、Express 应用生成器
+
+npm install express-generator -g
+
+2、vue-cli手脚架
+
+npm install -g vue-cli
+
+3、项目结构
+
+.
+├── server    //放置服务端代码
+└── view     //放置前端代码       
+
+在根目录下生成服务端项目 - server
+
+//生成项目
+express server
+cd server
+cnpm install
+
+//运行项目
+set DEBUG=server:* & npm start     //Windows平台
+
+1、在express目录下，安装cors包
+npm install cors --save
+
+2、在app.js中配置：开启cors,就如下图
+
+var cors=require("cors")
+
+app.use(cors({
+    origin:['http://localhost:80080'],      //允许这个域的访问
+    methods:['GET','POST'],
+    alloweHeaders:["Conten-type",'Authorization']      //只允许带这两种请求头的连接访问方式
+
+))
+
+在根目录下生成前端项目 - views
+
+//生成项目
+vue init webpack views
+cd views
+
+cnpm install
+
+//运行项目
+npm run dev
+
+下载axios
+
+cnpm i --save axios
+
+//在main.js中配置
+import axios from 'axios'  //引入
+
+Vue.prototype.$axios = axios;
+axios.defaults.baseURL = 'http://localhost:3000';
+
+请求数据
+
+init(){
+  this.$axios.get('/login').then(res=>{
+    console.log(res)
+  }).catch(err=>{
+    console.log(err)
+  })
+}
+
+
+
