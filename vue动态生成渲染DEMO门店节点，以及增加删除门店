@@ -1,0 +1,296 @@
+<template>
+	<div>
+		<el-row class="btn mt10">
+			<el-col class="el-col-sty m-view">
+<template v-if="returnFlag">
+			<button class="m-btn-group" v-on:click="return_click()" tooltip="">
+				<i class="u-icon fa fa-back s-blue"></i><span>返回</span>
+			</button>
+
+			<button class="m-btn-group" v-on:click="save_click()" tooltip="">
+				<i class="u-icon fa fa-save s-green"></i><span>保存</span>
+			</button>
+</template>
+
+<template v-else>         
+					<button class="m-btn-group" v-on:click="modify_click()" tooltip="">
+						<i class="u-icon fa fa-edit s-green"></i><span>编辑</span>
+					</button>
+					<button class="m-btn-group" v-on:click="save_click()" tooltip="">
+						<i class="u-icon fa fa-save s-green"></i><span>保存</span>
+					</button>
+					<!-- <button class="m-btn-group" v-on:click="del_click()" round>
+						<i class="u-icon fa fa-delete s-green"></i><span>删除</span>
+					</button> -->
+				</template>
+			</el-col>
+		</el-row>
+
+
+	  <el-row class="div_tabs">
+		<div class="div_tabs_from">
+           <el-row>
+                <el-col :span="24"><div class="grid-content span-title bg-purple-dark">支付方式配置</div></el-col>
+           </el-row>
+			 <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="120px" :label-position="right" :rules="rules"  class="wx-config editForm">
+				    <el-form-item label="支付方式">
+				      <el-select :model="dynamicValidateForm.payType" value=1 :disabled="disabled" class="el_input" placeholder="请选择活动区域">
+                         <el-option label="腾讯云支付" value="1"></el-option>
+                      </el-select>
+					</el-form-item>
+
+                    <el-form-item label="服务商ID" prop="outMchId" >
+                        <el-input class="el_input" :disabled="disabled"  v-model="dynamicValidateForm.outMchId"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="商户ID" prop="outSubMchId">
+                        <el-input class="el_input" :disabled="disabled"  v-model="dynamicValidateForm.outSubMchId"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="商户秘钥" prop='authenKey'>
+                        <el-input class="el_input"  :disabled="disabled" v-model="dynamicValidateForm.authenKey"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="订单前缀" prop='outTradeNoPrefix'>
+                        <el-input class="el_input"  :disabled="disabled" v-model="dynamicValidateForm.outTradeNoPrefix"></el-input>
+                    </el-form-item>
+		 </el-form>
+		 <store v-if="refreach"  v-for="(item,index) in fromCount" :class="'store'+item" :key="index" :dataStores="dataStores" :ref="'store'+item" :disabled="disabled" @childFlagFn="childFlagFn" @delete="generatedDeleted" :position="index" :item="item"></store>
+				 <el-button class="addStores" :disabled="disabled" @click="addStoresFn()" type="warning">添加门店</el-button>
+		</div>
+	  </el-row>
+	</div>
+</template>
+
+<script>
+    import store from '@/components/stores'
+	import wxAPI from "@/api/wx"
+    import {bus} from '@/bus.js'
+	 export default {
+		components:{store},
+		data() {
+		 return {
+			disabled:true,
+			returnFlag:false,
+			fromCount:[],  //门店个数,默认一个,针对到每个门店的id值,不包含删除的门店,数据有的门店为id显示,新建的门店加$区分
+            fromCountDelete:[],  //门店个数,用来在页面上面进行渲染,已经删除过的门店,隐藏了而已
+			fromCountNumber:1,
+			childFlag:true,     //子组件验证
+			parentFlag:true,     //父组件验证
+			refreach:true,
+			dynamicValidateForm:{
+				payType:'1',
+				outMchId:"",
+				outSubMchId:"",
+				authenKey:"",
+				outTradeNoPrefix:"",
+				id:""
+			},
+			addStores:[],
+			dataStores:[],
+			rules:{
+		    outMchId:{ required: true, message: '服务商ID不能为空', trigger: 'blur' },
+		    outSubMchId:{ required: true, message: '商户ID不能为空', trigger: 'blur' },
+		    authenKey:{ required: true, message: '商户秘钥不能为空', trigger: 'blur' },
+			outTradeNoPrefix:{ required: true, message: '订单前缀不能为空', trigger: 'blur' },
+			  }
+	        }
+		  },
+		watch:{
+            fromCount:function(newValue,oldValue){
+                this.fromCount=newValue          //门店默认数量
+			}
+		},
+		created(){
+            this.init()
+		},
+		mounted(){
+		},
+		methods:{
+			init(){                            //获取门店配置列表
+			this.dataStores=[]
+             wxAPI.tencentPayList().then(res=>{
+				 if(res.meta.success){
+					 this.dynamicValidateForm.payType=res.data.payType
+					 this.dynamicValidateForm.id=res.data.id
+					 this.dynamicValidateForm.outMchId=res.data.outMchId
+					 this.dynamicValidateForm.outSubMchId=res.data.outSubMchId
+					 this.dynamicValidateForm.authenKey=res.data.authenKey
+					 this.dynamicValidateForm.outTradeNoPrefix=res.data.outTradeNoPrefix
+					 this.dataStores=res.data.list
+					 this.refreach=true
+					 if(res.data.list.length>0){
+						 this.fromCount=[]      //每次保存的时候,将门店的数据清空,重新渲染
+						 this.fromCountDelete=[] //每次保存的时候,将门店的删除数据清空
+						 res.data.list.forEach((ele,index)=>{
+						 this.fromCount.push(ele.id)
+						 })
+					 }else{
+						 this.fromCount=["$1"]
+					 }
+				 }else{
+					 console.log(res.meta.message)
+				 }
+			 })
+			},
+			generatedDeleted(value){           //用来监听哪些门店被删除了,
+			 this.fromCountDelete.push(value)
+			},
+			childFlagFn(value){
+             this.childFlag=value             //根据子组件效验
+			},
+			generated(value){             //动态生成门店对象
+              return 
+			},
+			addStoresFn(){
+			 this.fromCountNumber=this.fromCountNumber+1           //使用$符号区分,带有$符号的代表是动态生成的, 如果默认全部为注数字的代表为id,为数据获取的
+			 this.fromCount.push("$"+this.fromCountNumber)           //本地操作每次++ 
+			 },
+			 return_click(){
+			 this.disabled=true
+			 this.returnFlag=false
+			 this.refreach=false
+			 this.init()
+			 },
+			save_click_dome(){  
+			 //验证支付设置是否验证成功
+			 let that=this
+			 this.$refs.dynamicValidateForm.validate((valid) => {
+				 if (valid) {
+					 that.parentFlag=true
+					 }else{
+						 that.parentFlag=false
+                     }
+				 })
+			//调取子组件的验证方法                    
+			  this.fromCount.forEach((ele,index)=>{                             //遍历所有的门店
+			      if(this.fromCountDelete.indexOf(ele)==-1){                    //== "-1" 代表不在删除门店内,如果删除了,则没必要获取数据验证传参
+				        let string='that.$refs.store'+ele+"[0]"                 //获取门店demo的一个string
+				        let demo=eval(string)                                   //使用eval方法获取string对应的demo对象
+				        demo.save_click()                                       //调取改对象的验证方法
+				  }
+			  })                             
+			 },
+			modify_click(){
+			  this.disabled=false
+			  this.returnFlag=true
+			},
+			save_click(){
+			  let that=this
+			  this.save_click_dome()
+			  this.$nextTick(()=>{
+				   if(that.childFlag && that.parentFlag){
+					that.addStores=[]
+					this.fromCount.forEach((ele,index)=>{
+						if(this.fromCountDelete.indexOf(ele)==-1){                    //== "-1" 代表不在删除门店内,如果删除了,则没必要获取数据验证传参
+					   		  let string='that.$refs.store'+ele+"[0]"                //获取门店demo的一个string
+							  let demo=eval(string)                                  //使用eval方法获取string对应的demo对象
+							  that.addStores.push(demo.dynamicValidateForm)
+							  that.dynamicValidateForm.payType=Number(that.dynamicValidateForm.payType)
+						}
+					})
+							  that.dynamicValidateForm.list=that.addStores
+							  wxAPI.tencentPay(that.dynamicValidateForm).then(res=>{
+								  if(res.meta.success){
+									  this.$message({message: '保存成功',type: 'success'});
+									  this.disabled=true
+									  this.returnFlag=false
+									  this.refreach=false
+			                          this.init()
+								  }else{
+									  this.$message.error('保存失败');
+								  }
+							  })
+				   }else{
+					                  this.$message.error('请按照提示填写信息');
+				   }
+			  })
+			}
+		}	 
+	    }
+</script>
+
+<style scoped>
+    .div_tabs_from{
+	    height: calc(100% - 46px);
+	}
+    .addStores{
+	    margin: 20px 0 0 120px;
+		padding: 8px 20px;
+      }
+    .editForm{
+        border-bottom: 1px dashed#d7dae2;
+        padding: 0 0 30px 0;
+    }
+    .el_input{
+		width: 60% !important;
+	}
+    .div_tabs {
+		padding: 30px 15px;
+	}
+	.span-title{
+		margin: 5px 0 25px 20px;
+        font-weight: bold;
+		text-align: left;
+        color: #2c3e50;
+        font-size: 13px;
+	}
+	.wx-config .el-input__inner{
+		width: 60%;
+		border-left:none;
+        border-right:none;
+        border-top:none;
+        border-bottom:1px solid #D9D9D9;
+	}
+	.wx-menu .el-input__inner{
+		width: 95%;
+		border:0px solid #C0C4CC;
+		text-align: center;
+	}
+	
+	.el-input.is-disabled .el-input__inner{
+		background-color: #FFF; 
+    border-color: #e4e7ed;
+    color: #000;
+    cursor: not-allowed;
+	}
+	.span-title{
+		margin:5px 0 10px 20px;
+		font-weight: bold;
+		display:block;
+	}
+	
+	.wx-welecome{
+		width: 100%;
+	}
+	.wx-welecome-text{
+		width: 95%;
+		margin-left:20px;
+	}
+	
+	
+	.menu-table{
+		width: 60%;
+		float: left;
+	}
+	.menu-edit-div{
+		width: 39%;
+		float: right;
+	}
+	
+	.wx-menu-btn{
+		float: right;
+	}
+	
+	.summary{
+		display: block;
+		font-weight: bold;
+		margin:20px 0 5px 20px;
+	}
+	
+	.remark{
+		display: block;
+		margin-left: 20px;
+		margin-bottom: 10px;
+	}
+</style>
