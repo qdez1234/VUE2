@@ -1,0 +1,146 @@
+<template>
+	<div style="height: 99%;" v-if="showFlag">
+			 <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="120px" :label-position="right" :rules="rules"  class="wx-config editForm">
+					<el-form-item>
+					    <!-- <el-radio  :disabled="disabled" v-model="dynamicValidateForm.default" label="1">默认门店</el-radio> -->
+                    </el-form-item>
+
+					<el-form-item label="门店ID" prop="outShopId">
+                        <el-input class="el_input" :disabled="disabled"  v-model="dynamicValidateForm.outShopId"></el-input>
+                    </el-form-item>
+
+					<el-form-item label="门店名称" prop="shopName">
+                        <el-input class="el_input" :disabled="disabled"  v-model="dynamicValidateForm.shopName"></el-input>
+                    </el-form-item>
+
+				    <el-form-item label="交易币种">
+				      <el-select v-model="dynamicValidateForm.feeType" :disabled="disabled" class="el_input" placeholder="请选择交易币种">
+                         <el-option label="人民币(CNY)" value="CNY"></el-option>
+                      </el-select>
+					</el-form-item>
+
+					<el-form-item label="员工ID" prop="staffId">
+                        <el-input class="el_input" :disabled="disabled"  v-model="dynamicValidateForm.staffId"></el-input>
+                    </el-form-item>
+
+					<el-form-item label="设备ID" prop="deviceId">
+                        <el-input class="el_input" :disabled="disabled"  v-model="dynamicValidateForm.deviceId"></el-input>
+                    </el-form-item>
+
+					<el-form-item label="门店电话" prop="shopPhone">
+                        <el-input class="el_input" :disabled="disabled"  v-model="dynamicValidateForm.shopPhone"></el-input>
+                    </el-form-item>
+
+					<el-form-item label="门店地址" prop="shopAddress">
+                        <el-input class="el_input" :disabled="disabled"  v-model="dynamicValidateForm.shopAddress"></el-input>
+                    </el-form-item>
+                    <el-form-item v-if="position==0">
+                        <el-radio v-model="radio" :disabled="disabled"  label="1">默认门店</el-radio>
+                    </el-form-item>
+                    <el-form-item v-if="position>0">
+                        <el-button class="addStores" :disabled="disabled" @click="generatedDeleted()" type="danger">删除门店</el-button>
+                    </el-form-item>
+		 </el-form>
+		</div>
+</template>
+
+<script>
+	import wxAPI from "@/api/wx"
+    import {bus} from '@/bus.js'
+	 export default {
+        props:['disabled','position','item','dataStores'],
+        watch:{
+            disabled:function(newValue,oldValue){
+                 this.disabled=newValue
+            },   
+            position:function(newValue,oldValue){
+                 this.position=newValue
+            },
+            item:function(newValue,oldValue){              //当前门店的id为Number或者$加数组
+                 this.item=newValue
+            },
+            dataStores:function(newValue,oldValue){
+                  let that=this
+                  this.dataStores=newValue   
+            }
+        },
+		data() {
+		 return {
+            showFlag:true,
+            radio: '1',
+            dynamicValidateForm:{
+                outShopId:"",
+                staffId:"",
+                shopName:"",
+                deviceId:"",
+                feeType:"CNY",
+                shopPhone:"",
+                shopAddress:"",
+                id:"",
+            },
+			rules:{
+			outShopId:[{required:true,message:"门店ID不能为空",trigger:"blur"}],
+			staffId:[{required:true,message:"员工ID不能为空",trigger:"blur"},{ min: 0, max: 11, message: '长度在 0 到 11 个字符', trigger: 'blur' }],
+			deviceId:[{required:true,message:"设备ID不能为空",trigger:"blur"},{required:true,message:"员工ID不能为空",trigger:"blur"},{ min: 0, max: 11, message: '长度在 0 到 11 个字符', trigger: 'blur' }]
+			}
+	        }
+		  },
+		created(){
+            let that=this
+            this.dataStores.forEach((ele,index)=>{
+                 if(ele.id==that.item){             //门店数据中的id和当前门店的id对应上,则代表是同一个门店和数据,则关联
+                     that.dynamicValidateForm.outShopId=ele.outShopId
+                     that.dynamicValidateForm.staffId=ele.staffId
+                     that.dynamicValidateForm.shopName=ele.shopName
+                     that.dynamicValidateForm.deviceId=ele.deviceId
+                     that.dynamicValidateForm.feeType=ele.feeType
+                     that.dynamicValidateForm.shopPhone=ele.shopPhone
+                     that.dynamicValidateForm.shopAddress=ele.shopAddress
+                     that.dynamicValidateForm.id=ele.id
+                 }
+            })
+		},
+		methods:{
+            generatedDeleted(){
+                this.showFlag=false
+                this.$emit("delete",this.item)
+                if(this.dynamicValidateForm.id!=""){
+                  wxAPI.tencentPayDelete({ids:this.dynamicValidateForm.id}).then(res=>{
+                      if(res.meta.success){
+                            this.$message({message: '删除成功',type: 'success'});
+                      }else{
+                            this.$message({message: '删除失败',type: 'warring'});
+                      }
+                  })
+                }else{
+                     this.$message({message: '删除成功',type: 'success'});
+                }
+            },
+			save_click(){
+              let that=this
+              this.$refs.dynamicValidateForm.validate((valid) => {
+				 if (valid) {
+                     that.$emit("childFlagFn",true)
+                 }else{
+                     that.$emit("childFlagFn",false)
+                     }
+                 })
+			}  
+		}	 
+	    }
+</script>
+<style scoped>
+    .addStores{
+		padding: 8px 20px;
+      }
+    .el_input{
+		width: 60% !important;
+	}
+    .editForm{
+        border-bottom: 1px dashed#d7dae2;
+        padding: 30px 0;
+    }
+</style>
+
+
+
