@@ -1,0 +1,76 @@
+通过webpack插件之DefinePlugin在编译阶段根据NODE_ENV自动切换配置文件，提升前端开发效率。
+
+在build配置文件，  以dev 开发环境为例子
+
+
+
+命令行 使用  cross插件， 然后配置全局的变量process.env.NODE_ENV 为 production  
+                                      process.env.env_config 为 test  
+                                      
+"build:test": "cross-env NODE_ENV=production env_config=test node build/build.js"
+
+
+build/webpack.prod.conf 文件
+
+在    plugins: [
+        new webpack.DefinePlugin({
+                                             //'process.env': require('../config/dev.env')默认是这个，直接加载对应文件夹的变量
+            'process.env': env              //通过判断env 变量来动态切换全局的环境变量
+        }),
+        
+const env = config.build[process.env.env_config + 'Env']        // env 全局的环境配置来源   
+
+
+config文件里面的index.js
+
+
+ build: {
+       testEnv: require('./test.env'), // 新增一个 testEnv参数，
+
+
+
+
+config/dev.env  配置环境变量的文件
+
+'use strict'
+const merge = require('webpack-merge')
+const prodEnv = require('./prod.env')
+
+
+
+'use strict'
+module.exports = {
+    NODE_ENV: '"testing"',           //配置全局为testing变量
+    ENV_CONFIG: '"test"'
+}
+
+
+
+
+
+然后配置接口配置文件夹
+
+if (process.env.NODE_ENV === 'development') {
+  baseconfig = {
+    baseurl: '',
+    uploadurl: '',
+    uploadmall1:'',
+    baseserver: 'http://118.89.64.133/Channel-B2-Server/api',
+    basemall: 'http://118.89.64.133/mall/api',
+    // basemall: 'http://192.168.1.228:8182/mall/api',
+    tms: 'http://118.89.64.133/tmsApi/api', //TMS接口地址
+  }
+} else if (process.env.NODE_ENV === 'testing') {
+  baseconfig = {
+    baseurl: 'http://118.89.64.133', // 测试环境打包,
+    uploadurl: 'http://118.89.64.133', // 下载文件地址,
+    baseserver: '/Channel-B2-Server/api',
+    basemall: '/mall/api',
+    tms: '/tmsApi/api', //TMS接口地址
+  }
+} 
+
+
+
+
+
