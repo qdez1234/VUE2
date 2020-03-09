@@ -1,0 +1,13 @@
+1.公众号配置网站域名
+2.通过接口获取// 获取微信AppId
+3.通过appid使用微信授权码     
+let redirectUri = encodeURI(window.location.href.split('#')[0] + '#/wechat')   //必须使用encodeURI进行加密当前网址首页
+let url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appid + "&redirect_uri=" + encodeURIComponent(redirectUri, 'UTF-8') + "&response_type=code&scope=snsapi_base&state=10#wechat_redirect"
+appid和redirect_url重定向授权地址，获取openid
+
+当需要登录时, 原来要跳转到login,现在直接window.location.href(上面的这个地址),在微信中你会发现地址会变成
+
+http://www.XXXX.com/#/wechat?code=XXX&state=XXX     //授权通过后重定向的返回地址变成了，带有code的字段
+
+然后通过code去获取客户的信息，openid，图片等相关信息
+
